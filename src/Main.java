@@ -2,9 +2,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 /**
- * Created by Matthias on 15.07.2017.
+ * Created by Matthias Lodner on 15.07.2017.
  */
 public class Main {
     public static void main(String[] args) throws Exception {
