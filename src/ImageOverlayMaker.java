@@ -9,19 +9,44 @@ import java.io.IOException;
  */
 public class ImageOverlayMaker {
 
-    public void addOverlayToSingleImage(File fileImageOverlay, File fileImageBackground, File pathExport, String newImageName, int posX, int posY) throws IOException {
+    /**
+     * Method to add an overlay image to an background image
+     */
+    public void addOverlayToSingleImage(File fileImageOverlay, File fileImageBackground, File ExportFile, int posX, int posY) throws IOException {
         Image imageforeground = ImageIO.read(fileImageOverlay);
 
         BufferedImage bufferedImage = ImageIO.read(fileImageBackground);
         Graphics graphics = bufferedImage.getGraphics();
 
-
         graphics.drawImage(imageforeground,posX,posY,null);
         graphics.dispose();
 
-        //ImageIO.write(bufferedImage, "png", new File("./ImageOutput/" + fileImageBackground.getName()));
+        ImageIO.write(bufferedImage, "png", ExportFile);
+    }
 
-        ImageIO.write(bufferedImage, "png", new File(pathExport.getPath() + newImageName));
+    /**
+     * Method to add an overlay image to all images in a folder
+     */
+    public void addOverlayToMulitpleImages(File fileImageOverlay, File folderPath, String ExportFolder, int posX, int posY) throws IOException {
+        Image imageforeground = ImageIO.read(fileImageOverlay);
+
+        BufferedImage bufferedImage = null;
+        Graphics graphics = null;
+
+        File[] listOfFilesBackground = folderPath.listFiles();
+
+        for(File file : listOfFilesBackground){
+            if(file.isFile()){
+                bufferedImage = ImageIO.read(file);
+
+                graphics = bufferedImage.getGraphics();
+
+                graphics.drawImage(imageforeground, posX, posY,null);
+                graphics.dispose();
+
+                ImageIO.write(bufferedImage, "png", new File(ExportFolder + file.getName()));
+            }
+        }
     }
 
 
